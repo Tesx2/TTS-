@@ -1,0 +1,1 @@
+mongodb+srv://vince:<SecurePass123>@cluster0.rejpg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

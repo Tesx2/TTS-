@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Payments</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+        .payment-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .payment-icons img {
+            width: 50px;
+            height: 50px;
+        }
+        .payment-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .payment-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .confirm-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .cancel-btn {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-icons">
+            <img src="images/mpesa-icon.png" alt="M-Pesa">
+            <img src="images/airtelmoney-icon.png" alt="Airtel Money">
+            <img src="images/paypal-icon.png" alt="PayPal">
+        </div>
+        <h2>Vote Payments</h2>
+        <p>Each vote costs KES 10. Enter your details below:</p>
+        <input type="number" id="votesAmount" placeholder="Enter Votes Amount">
+        <input type="text" id="yourName" placeholder="Your Name">
+        <input type="text" id="yourPhoneNumber" placeholder="Your Phone Number">
+        <input type="text" id="contestantNumber" placeholder="Contestant Number">
+        <input type="text" id="contestantName" placeholder="Contestant Name">
+        <button class="confirm-btn">Confirm</button>
+        <button class="cancel-btn" onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Pre-fill the input fields with URL parameters
+        document.getElementById('contestantNumber').value = getUrlParameter('contestantNumber');
+        document.getElementById('contestantName').value = getUrlParameter('contestantName');
+    </script>
+</body>
+</html>

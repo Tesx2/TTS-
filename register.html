@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barkscript&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 80px 20px 60px; /* Adjusted padding to account for header and footer */
+        }
+        #background-logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('logo.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.2;
+            z-index: -2;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .upload-btn {
+            width: 80px;
+            height: 80px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+        .upload-btn:hover {
+            background: #0056b3;
+        }
+        .upload-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        h2 {
+            font-family: 'Barkscript', cursive;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding: 20px 0;
+        }
+        input, select {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 14px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .error {
+            border: 2px solid red;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .checkbox-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0;
+        }
+        .checkbox-container label {
+            margin-left: 5px;
+            margin-right: 15px;
+        }
+        header, footer {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        header {
+            top: 0;
+        }
+        footer {
+            bottom: 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons button {
+            background: white;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        .nav-buttons button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div id="background-logo"></div>
+    <header id="header">
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">Home</button>
+            <button onclick="window.location.href='admin.html'">Admin</button>
+            <button onclick="window.location.href='results.html'">Results</button>
+            <button onclick="window.location.href='contestants.html'">Participants</button>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Register</h2>
+        <div class="upload-container">
+            <button class="upload-btn" onclick="triggerFileUpload()">+</button>
+            <p class="upload-text">Upload a Profile Pic</p>
+            <input type="file" id="fileInput" style="display: none;" required>
+        </div>
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="text" id="artistName" placeholder="Artist Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" pattern="\d{10}" required>
+        <input type="text" id="idNumber" placeholder="ID Number" required>
+        <div class="checkbox-container">
+            <div>
+                <input type="checkbox" id="myIdNo" name="idType" required>
+                <label for="myIdNo">My ID NO</label>
+            </div>
+            <div>
+                <input type="checkbox" id="guardiansIdNo" name="idType" required>
+                <label for="guardiansIdNo">Guardian's ID NO</label>
+            </div>
+        </div>
+        <select id="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <select id="talent" required>
+            <option value="">Select Talent Category</option>
+            <option value="Secular singing">Secular Singing</option>
+            <option value="Gospel singing">Gospel Singing</option>
+            <option value="dancing">Dancing</option>
+            <option value="acting">Acting</option>
+            <option value="modelling">Modelling</option>
+            <option value="Art">Art</option>
+            <option value="other">Other</option>
+        </select>
+        <select id="county" required>
+            <option value="">Select County</option>
+            <option value="baringo">Baringo</option>
+            <option value="bomet">Bomet</option>
+            <option value="bungoma">Bungoma</option>
+            <option value="busia">Busia</option>
+            <option value="elgeyo-marakwet">Elgeyo Marakwet</option>
+            <option value="embu">Embu</option>
+            <option value="garissa">Garissa</option>
+            <option value="homa-bay">Homa Bay</option>
+            <option value="isiolo">Isiolo</option>
+            <option value="kajiado">Kajiado</option>
+            <option value="kakamega">Kakamega</option>
+            <option value="kericho">Kericho</option>
+            <option value="kiambu">Kiambu</option>
+            <option value="kilifi">Kilifi</option>
+            <option value="kirinyaga">Kirinyaga</option>
+            <option value="kisii">Kisii</option>
+            <option value="kisumu">Kisumu</option>
+            <option value="kitui">Kitui</option>
+            <option value="kwale">Kwale</option>
+            <option value="laikipia">Laikipia</option>
+            <option value="lamu">Lamu</option>
+            <option value="machakos">Machakos</option>
+            <option value="makueni">Makueni</option>
+            <option value="mandera">Mandera</option>
+            <option value="marsabit">Marsabit</option>
+            <option value="meru">Meru</option>
+            <option value="migori">Migori</option>
+            <option value="mombasa">Mombasa</option>
+            <option value="murang'a">Murang'a</option>
+            <option value="nairobi">Nairobi</option>
+            <option value="nakuru">Nakuru</option>
+            <option value="nandi">Nandi</option>
+            <option value="narok">Narok</option>
+            <option value="nyamira">Nyamira</option>
+            <option value="nyandarua">Nyandarua</option>
+            <option value="nyeri">Nyeri</option>
+            <option value="samburu">Samburu</option>
+            <option value="siaya">Siaya</option>
+            <option value="taita-taveta">Taita Taveta</option>
+            <option value="tana-river">Tana River</option>
+            <option value="tharaka-nithi">Tharaka Nithi</option>
+            <option value="trans-nzoia">Trans Nzoia</option>
+            <option value="turkana">Turkana</option>
+            <option value="uasin-gishu">Uasin Gishu</option>
+            <option value="vihiga">Vihiga</option>
+            <option value="wajir">Wajir</option>
+            <option value="west-pokot">West Pokot</option>
+        </select>
+        <button class="btn" onclick="validateForm()">Register</button>
+    </div>
+
+    <!-- The Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('errorModal')">&times;</span>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('successModal')">&times;</span>
+            <p>Registration Successful!</p>
+        </div>
+    </div>
+
+    <footer id="footer">
+        Useful Links
+    </footer>
+
+    <script>
+        function triggerFileUpload() {
+            document.getElementById('fileInput').click();
+        }
+
+        function validateForm() {
+            let name = document.getElementById("name");
+            let artistName = document.getElementById("artistName");
+            let email = document.getElementById("email");
+            let phone = document.getElementById("phone");
+            let idNumber = document.getElementById("idNumber");
+            let myIdNo = document.getElementById("myIdNo");
+            let guardiansIdNo = document.getElementById("guardiansIdNo");
+            let gender = document.getElementById("gender");
+            let talent = document.getElementById("talent");
+            let county = document.getElementById("county");
+            let fileInput = document.getElementById("fileInput");
+
+            let errorMessage = document.getElementById("errorMessage");
+
+            // Reset error styles
+            document.querySelectorAll(".error").forEach(el => el.classList.remove("error"));
+
+            // Validation Checks
+            if (!name.value.trim()) name.classList.add("error");
+            if (!artistName.value.trim()) artistName.classList.add("error");
+            if (!email.value.includes("@gmail.com")) email.classList.add("error");
+            if (!/^\d{10}$/.test(phone.value)) phone.classList.add("error");
+            if (!idNumber.value.trim()) idNumber.classList.add("error");
+            if (!myIdNo.checked && !guardiansIdNo.checked) {
+                myIdNo.classList.add("error");
+                guardiansIdNo.classList.add("error");
+            }
+            if (!gender.value) gender.classList.add("error");
+            if (!talent.value) talent.classList.add("error");
+            if (!county.value) county.classList.add("error");
+            if (fileInput.files.length === 0) fileInput.classList.add("error");
+
+            // If any errors exist, show modal and return
+            if (document.querySelectorAll(".error").length > 0) {
+                errorMessage.textContent = "Please fill in all fields correctly!";
+                showModal('errorModal');
+                return;
+            }
+
+            // Show success modal
+            showModal('successModal');
+            clearForm();
+        }
+
+        // Function to Reset the Form
+        function clearForm() {
+            document.getElementById("name").value = "";
+            document.getElementById("artistName").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("idNumber").value = "";
+            document.getElementById("myIdNo").checked = false;
+            document.getElementById("guardiansIdNo").checked = false;
+            document.getElementById("gender").value = "";
+            document.getElementById("talent").value = "";
+            document.getElementById("county").value = "";
+            document.getElementById("fileInput").value = "";
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        document.getElementById('phone').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('name').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            });
+        });
+
+        document.getElementById('email').addEventListener('input', function (e) {
+            e.target.value = e.target.value.toLowerCase();
+        });
+
+        document.getElementById('myIdNo').addEventListener('change', function () {
+            if (this.checked) {
+                document.getElementById('guardiansIdNo').checked = false;
+            }
+        });
+
+        document.getElementById('guardiansIdNo').addEventListener('change', function () {
+            if (this.checked) {
+                document.getElementById('myIdNo').checked = false;
+            }
+        });
+
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('header');
+            const footer = document.getElementById('footer');
+            if (window.scrollY === 0) {
+                header.style.opacity = '1';
+            } else {
+                header.style.opacity = '0';
+            }
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                footer.style.opacity = '1';
+            } else {
+                footer.style.opacity = '0';
+            }
+        });
+    </script>
+</body>
+</html>

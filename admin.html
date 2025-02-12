@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        header, footer {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header {
+            top: 0;
+        }
+
+        footer {
+            bottom: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            background: white;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        .nav-buttons button:hover {
+            background: #f0f0f0;
+        }
+
+        section {
+            margin-top: 80px; /* Add margin to ensure content is not covered by the header */
+            margin-bottom: 80px; /* Add margin to ensure content is not covered by the footer */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input, button, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .contestant-list {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .contestant-card {
+            background: white;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 150px;
+            text-align: center;
+        }
+
+        .contestant-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .contestant-card button {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .contestant-card button:hover {
+            background: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">Home</button>
+            <button onclick="window.location.href='contestants.html'">Participants</button>
+            <button onclick="window.location.href='results.html'">Results</button>
+        </div>
+    </header>
+
+    <!-- Admin Login Form -->
+    <section id="adminLogin">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+        <button onclick="checkAdmin()">Login</button>
+    </section>
+
+    <!-- Admin Form to Manually Add Contestants (Hidden Until Login) -->
+    <section id="adminForm" style="display: none;">
+        <h2>Add New Contestant</h2>
+        <input type="text" id="fullName" placeholder="Full Name" required>
+        <input type="text" id="artistName" placeholder="Artist Name" required>
+        <select id="talentCategory" required>
+            <option value="" disabled selected>Select Talent Category</option>
+            <option value="Art">Art</option>
+            <option value="Gospel Singing">Gospel Singing</option>
+            <option value="Secular Singing">Secular Singing</option>
+            <option value="Dancing">Dancing</option>
+            <option value="Acting">Acting</option>
+            <option value="Modelling">Modelling</option>
+        </select>
+        <input type="file" id="profilePic" accept="image/*" required>
+        <button onclick="addContestant()">Add Contestant</button>
+    </section>
+
+    <!-- Contestant List (Hidden Until Login) -->
+    <section id="contestantList" style="display: none;">
+        <h2>Contestant List</h2>
+        <div class="contestant-list" id="contestantListContainer">
+            <!-- Contestant cards will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <script src="admin.js"></script>
+</body>
+</html>

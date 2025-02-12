@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contestants</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s, transform 0.3s;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header {
+            top: 0;
+        }
+
+        footer {
+            bottom: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            background: white;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        .nav-buttons button:hover {
+            background: #f0f0f0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 100px 20px 60px; /* Adjusted padding to account for header and footer */
+            margin-top: 80px; /* Ensure content is not covered by the fixed header */
+        }
+
+        .profile-card {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid #007bff;
+        }
+
+        .profile-card h3 {
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .profile-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .profile-card p strong {
+            color: #333;
+        }
+
+        .profile-card .vote-btn, .profile-card .whatsapp-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .profile-card .vote-btn:hover, .profile-card .whatsapp-btn:hover {
+            background: #0056b3;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .category-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .category-section .category-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registered Contestants</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'">Home</button>
+            <button onclick="window.location.href='admin.html'">Admin</button>
+            <button onclick="window.location.href='results.html'">Results</button>
+        </div>
+    </header>
+    <main id="contestantsContainer">
+        <!-- Contestant categories will be dynamically inserted here -->
+    </main>
+    <footer>
+        <p>&copy; 2025 Truthwave Talent Search. All rights reserved.</p>
+        <div class="footer-links">
+            <p>Useful Links: <a href="admin.html">Admin Portal</a></p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const contestantsContainer = document.getElementById("contestantsContainer");
+
+            // Get contestants from localStorage
+            const contestants = JSON.parse(localStorage.getItem("contestants")) || [];
+
+            // Group contestants by category
+            const categories = {};
+            contestants.forEach(contestant => {
+                if (!categories[contestant.talentCategory]) {
+                    categories[contestant.talentCategory] = [];
+                }
+                categories[contestant.talentCategory].push(contestant);
+            });
+
+            // Sort contestants within each category by unique code
+            Object.keys(categories).forEach(category => {
+                categories[category].sort((a, b) => a.uniqueCode.localeCompare(b.uniqueCode));
+            });
+
+            // Clear previous content
+            contestantsContainer.innerHTML = "";
+
+            if (contestants.length === 0) {
+                contestantsContainer.innerHTML = "<p>No contestants registered yet.</p>";
+                return;
+            }
+
+            // Display each category and its contestants
+            Object.keys(categories).forEach(category => {
+                const categorySection = document.createElement("section");
+                categorySection.classList.add("category-section");
+                categorySection.innerHTML = `<h2>${category}</h2>`;
+                const categoryContent = document.createElement("div");
+                categoryContent.classList.add("category-content");
+                categories[category].forEach(contestant => {
+                    const card = document.createElement("div");
+                    card.classList.add("profile-card");
+                    card.innerHTML = `
+                        <img src="${contestant.profilePicURL}" alt="${contestant.artistName}">
+                        <h3>${contestant.fullName}</h3>
+                        <p><strong>Artist Name:</strong> ${contestant.artistName}</p>
+                        <p><strong>Talent Category:</strong> ${contestant.talentCategory}</p>
+                        <p><strong>Unique Code:</strong> ${contestant.uniqueCode}</p>
+                        <button class="vote-btn" onclick="voteForContestant('${contestant.uniqueCode}', '${contestant.fullName}')">Vote for Me</button>
+                        <button class="whatsapp-btn" onclick="shareToWhatsApp('${contestant.artistName}', '${contestant.uniqueCode}')">Share to WhatsApp</button>
+                    `;
+                    categoryContent.appendChild(card);
+                });
+                categorySection.appendChild(categoryContent);
+                contestantsContainer.appendChild(categorySection);
+            });
+        });
+
+        function voteForContestant(contestantNumber, contestantName) {
+            const url = new URL('Payment Methods.html', window.location.origin);
+            url.searchParams.set('contestantNumber', contestantNumber);
+            url.searchParams.set('contestantName', contestantName);
+            window.location.href = url.toString();
+        }
+
+        function shareToWhatsApp(artistName, uniqueCode) {
+            const message = `Vote for ${artistName}! Support me by clicking the link: ${window.location.origin}/Payment%20Methods.html?contestantNumber=${uniqueCode}&contestantName=${artistName}`;
+            const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            const scrollTop = window.scrollY;
+
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+                footer.style.transform = 'translateY(100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+                footer.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        });
+    </script>
+</body>
+</html>
